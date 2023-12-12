@@ -61,9 +61,14 @@ def top_gainers_and_losers(df):
 
 
 def top_market_cap(df):
-    print(df.loc[df["Tickers"] == "AAPL"])
     for x in range(10):
-        print(Tickers[x])
+        list_all_tickers = df.index.values.tolist()
+        index = list_all_tickers.index(Tickers[x])
+        if df.iloc[index, df.shape[1] - 1] >= 0:
+            print(Fore.GREEN + f"{Tickers[x]}: {df.iloc[index, df.shape[1] - 1]}")
+        else: print(Fore.RED + f"{Tickers[x]}: {df.iloc[index, df.shape[1] - 1]}")
+
+    print(Fore.WHITE + "\n")
 
 top_gainers_and_losers(day_change_sorted)
 top_market_cap(day_change_sorted)
