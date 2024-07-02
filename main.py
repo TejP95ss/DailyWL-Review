@@ -11,6 +11,7 @@ Daily_Percent_Change = []
 Corrected_Market_Caps = []
 All_Tickers = []
 
+# goes through the 7 webpages to gather all the data for the most recent trading day.
 for q in range(7):
     url = f"https://companiesmarketcap.com/usa/largest-companies-in-the-usa-by-market-cap/?page={q+1}/"
     page = requests.get(url)
@@ -33,6 +34,7 @@ for q in range(7):
     Market_Caps = [word.text for word in market_caps]
     DailyPercents = []
     Market_Caps = Market_Caps[1:]
+    #gets the daily percent changes of the tickers.
     for x in percentages:
         spanclass = x.find('span', class_ = "percentage-green")
         if spanclass == None:
@@ -46,7 +48,7 @@ for q in range(7):
             strippedpercent = stringpercent[0:len(stringpercent)-1]
             numberpercent = float(strippedpercent)
             Daily_Percent_Change.append(numberpercent)
-
+    #gets the market cap of the tickers.
     for x in Market_Caps:
         if x[-1:].isalpha() == True:
             if x[-1:] == "T":
@@ -71,6 +73,7 @@ Dictionary_For_df = {"Ticker" : All_Tickers, "1D Percent Change" : Daily_Percent
 DataFrame = pd.DataFrame(Dictionary_For_df)
 DataFrame_Sorted = DataFrame.sort_values(by="1D Percent Change")
 
+#sorts the stocks by top percent gains and losses for the trading day.
 def top_gainers_and_losers(df, num):
     print(f"Stats for {date.today()}-{datetime.now().strftime('%A')} \n")
     print(Fore.BLUE + "Top 15 Losers")
@@ -85,6 +88,7 @@ def top_gainers_and_losers(df, num):
         print(Fore.GREEN + f"{x+1}: {reversedf.iloc[x, 0]} (Market Cap: ${reversedf.iloc[x, df.shape[1] - 1]} Billion): {reversedf.iloc[x, df.shape[1] - 2]} %")
     print(Fore.WHITE + "\n")
 
+#sorts the stocks by top $ amount added/lost by a stock.
 def DollarAmountFlows(df, num):
     DollarAmountInOut = [round(Corrected_Market_Caps[x] - (Corrected_Market_Caps[x] / (1 + ((Daily_Percent_Change[x]) / 100))), 2) for x in range(len(Corrected_Market_Caps))]
     df["Dollar Amount In/Out"] = DollarAmountInOut
@@ -101,6 +105,7 @@ def DollarAmountFlows(df, num):
         print(Fore.GREEN + f"{x+1}: {reversedf.iloc[x, 0]} (Market Cap: ${reversedf.iloc[x, reversedf.shape[1] - 2]} Billion): {reversedf.iloc[x, reversedf.shape[1] - 1]}")
     print(Fore.WHITE + "\n")
 
+#sorts by market cap for the visualizer.
 def top_market_cap():
     number_of_companies = 100
     Plot_MCap = Corrected_Market_Caps[:number_of_companies]
@@ -120,7 +125,13 @@ def top_market_cap():
     matplotlib.pyplot.axis("off")
     matplotlib.pyplot.show()
     
+print("Welcome to DailyWL&Review. Here you can see top movers for the day!")
+number = input("Enter an integer n to see the top n gainers/losers for the day: ")
+top_gainers_and_losers(DataFrame_Sorted, int(number))
+DollarAmountFlows(DataFrame, int(number))
+seeMap = input("Enter 'y' to see the heatmap visualizer of the top 100 stocks daily performance: ")
+if (seeMap == 'y'): 
+    top_market_cap()
+else:
+    "Thanks for using the program!"
 
-top_gainers_and_losers(DataFrame_Sorted, 15)
-DollarAmountFlows(DataFrame, 15)
-top_market_cap()
