@@ -79,13 +79,13 @@ def top_gainers_and_losers(df, num):
     print(Fore.BLUE + f"Top {num} Losers")
     print(Fore.WHITE)
     for x in range(num):
-        print(Fore.RED + f"{x+1}: {df.iloc[x, 0]} (Market Cap: ${df.iloc[x, df.shape[1] - 1]} Billion): {df.iloc[x, df.shape[1] - 2]} %")
+        print(Fore.RED + f"{x+1:02}: {df.iloc[x, 0]} (Market Cap: ${df.iloc[x, df.shape[1] - 1]} Billion): {df.iloc[x, df.shape[1] - 2]} %")
     print(Fore.BLUE + "\n")
     print(f"Top {num} Gainers")
     reversedf =  df.sort_values(by="1D Percent Change", ascending=False)
     print(Fore.WHITE)
     for x in range(num):
-        print(Fore.GREEN + f"{x+1}: {reversedf.iloc[x, 0]} (Market Cap: ${reversedf.iloc[x, df.shape[1] - 1]} Billion): {reversedf.iloc[x, df.shape[1] - 2]} %")
+        print(Fore.GREEN + f"{x+1:02}: {reversedf.iloc[x, 0]} (Market Cap: ${reversedf.iloc[x, df.shape[1] - 1]} Billion): {reversedf.iloc[x, df.shape[1] - 2]} %")
     print(Fore.WHITE + "\n")
 
 #sorts the stocks by top $ amount added/lost by a stock.
@@ -96,13 +96,13 @@ def DollarAmountFlows(df, num):
     print(Fore.BLUE + f"\nTop {num} Losers by Dollar Amount(in Billions)")
     print(Fore.WHITE)
     for x in range(num):
-        print(Fore.RED + f"{x+1}: {Sorted_df.iloc[x, 0]} (Market Cap: ${Sorted_df.iloc[x, Sorted_df.shape[1] - 2]} Billion): {Sorted_df.iloc[x, Sorted_df.shape[1] - 1]}")
+        print(Fore.RED + f"{x+1:02}: {Sorted_df.iloc[x, 0]} (Market Cap: ${Sorted_df.iloc[x, Sorted_df.shape[1] - 2]} Billion): {Sorted_df.iloc[x, Sorted_df.shape[1] - 1]}")
     print(Fore.BLUE + "\n")
     print(f"Top {num} Gainers by Dollar Amount(in Billions)")
     reversedf =  df.sort_values(by="Dollar Amount In/Out", ascending=False)
     print(Fore.WHITE)
     for x in range(num):
-        print(Fore.GREEN + f"{x+1}: {reversedf.iloc[x, 0]} (Market Cap: ${reversedf.iloc[x, reversedf.shape[1] - 2]} Billion): {reversedf.iloc[x, reversedf.shape[1] - 1]}")
+        print(Fore.GREEN + f"{x+1:02}: {reversedf.iloc[x, 0]} (Market Cap: ${reversedf.iloc[x, reversedf.shape[1] - 2]} Billion): {reversedf.iloc[x, reversedf.shape[1] - 1]}")
     print(Fore.WHITE + "\n")
 
 #sorts by market cap for the visualizer.
