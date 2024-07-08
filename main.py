@@ -13,7 +13,7 @@ All_Tickers = []
 
 # goes through the 7 webpages to gather all the data for the most recent trading day.
 for q in range(7):
-    url = f"https://companiesmarketcap.com/usa/largest-companies-in-the-usa-by-market-cap/?page={q+1}/"
+    url = f"https://companiesmarketcap.com/usa/largest-companies-in-the-usa-by-market-cap/?page={q+1}"
     page = requests.get(url)
     soup = BeautifulSoup(page.text, 'lxml')
 
@@ -134,4 +134,3 @@ if (seeMap == 'y'):
     top_market_cap()
 else:
     "Thanks for using the program!"
-
